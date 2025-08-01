@@ -27,10 +27,10 @@ jobs:
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
 
-      - name: Run flake8 (линтер)
+      - name: Run flake8
         run: flake8 .
 
-      - name: Run black (форматтер, только проверка)
+      - name: Run black
         run: black . --check
 
       - name: Run tests
