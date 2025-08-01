@@ -4,8 +4,8 @@ import factory
 import random
 from factory.alchemy import SQLAlchemyModelFactory
 
-from app.models import Client, Parking
-from app import db
+from hw.app.models import Client, Parking
+from hw.app import db
 
 
 class ClientFactory(SQLAlchemyModelFactory):

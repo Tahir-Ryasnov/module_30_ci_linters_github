@@ -2,7 +2,7 @@
 
 import pytest
 from datetime import datetime, timedelta
-from app import create_app, db as _db, models
+from hw.app import create_app, db as _db, models
 
 
 @pytest.fixture(scope="session")
