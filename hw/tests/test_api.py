@@ -1,3 +1,5 @@
+"""Тесты API для работы с клиентами и парковками."""
+
 import pytest
 from tests.factories import ClientFactory, ParkingFactory
 from app.models import Client, Parking, ClientParking
@@ -5,11 +7,13 @@ from app.models import Client, Parking, ClientParking
 
 @pytest.mark.parametrize("endpoint", ["/clients", "/clients/1"])
 def test_get_endpoints(client, endpoint):
+    """Тестирование получения списка клиентов и клиента по ID."""
     response = client.get(endpoint)
     assert response.status_code == 200
 
 
 def test_create_client(client):
+    """Тест создания нового клиента через POST /clients."""
     response = client.post(
         "/clients",
         json={
@@ -24,6 +28,7 @@ def test_create_client(client):
 
 
 def test_create_parking(client):
+    """Тест создания новой парковки через POST /parkings."""
     response = client.post(
         "/parkings",
         json={
@@ -37,6 +42,7 @@ def test_create_parking(client):
 
 @pytest.mark.parking
 def test_parking_entry(client, db):
+    """Тест логирования въезда клиента на парковку."""
     response = client.post(
         "/clients",
         json={
@@ -72,6 +78,7 @@ def test_parking_entry(client, db):
 
 @pytest.mark.parking
 def test_parking_exit_logic(client, db):
+    """Тест логики выезда с парковки (обновление времени выезда)."""
     response = client.post(
         "/clients",
         json={
@@ -112,25 +119,29 @@ def test_parking_exit_logic(client, db):
 
     parking = Parking.query.get(parking_id)
     parking.count_available_places += 1
+    db.session.commit()
     assert parking.count_available_places == 1
     assert log.time_out > log.time_in
 
 
 @pytest.mark.client
 def test_create_client_with_factory(db):
+    """Тест создания клиента с помощью фабрики."""
     client = ClientFactory()
     assert client.id is not None
 
 
 @pytest.mark.parking
 def test_create_parking_with_factory(db):
+    """Тест создания парковки с помощью фабрики."""
     parking = ParkingFactory()
     assert parking.id is not None
     assert parking.count_available_places == parking.count_places
 
 
 def test_create_client_with_factory_2(db):
+    """Проверка увеличения количества клиентов после создания через фабрику."""
     count_start = Client.query.count()
-    client = ClientFactory()
+    _ = ClientFactory()
     count_finish = Client.query.count()
     assert count_finish == count_start + 1

@@ -1,3 +1,5 @@
+"""Test fixtures for the Flask parking app."""
+
 import pytest
 from datetime import datetime, timedelta
 from app import create_app, db as _db, models
@@ -5,6 +7,7 @@ from app import create_app, db as _db, models
 
 @pytest.fixture(scope="session")
 def app():
+    """Create and configure a new app instance for testing."""
     app = create_app()
     app.config.update(
         {
@@ -48,10 +51,12 @@ def app():
 
 @pytest.fixture
 def client(app):
+    """Provide a test client for the app."""
     return app.test_client()
 
 
 @pytest.fixture
 def db(app):
+    """Provide a database session scoped to the test context."""
     with app.app_context():
         yield _db

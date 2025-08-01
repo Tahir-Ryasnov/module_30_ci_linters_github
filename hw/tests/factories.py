@@ -1,3 +1,5 @@
+"""Фабрики для создания тестовых данных моделей Client и Parking."""
+
 import factory
 import random
 from factory.alchemy import SQLAlchemyModelFactory
@@ -7,7 +9,11 @@ from app import db
 
 
 class ClientFactory(SQLAlchemyModelFactory):
+    """Фабрика для генерации тестовых клиентов."""
+
     class Meta:
+        """Метаданные фабрики Client."""
+
         model = Client
         sqlalchemy_session = db.session
         sqlalchemy_session_persistence = "flush"
@@ -23,7 +29,11 @@ class ClientFactory(SQLAlchemyModelFactory):
 
 
 class ParkingFactory(SQLAlchemyModelFactory):
+    """Фабрика для генерации тестовых парковок."""
+
     class Meta:
+        """Метаданные фабрики Parking."""
+
         model = Parking
         sqlalchemy_session = db.session
         sqlalchemy_session_persistence = "flush"
@@ -34,4 +44,5 @@ class ParkingFactory(SQLAlchemyModelFactory):
 
     @factory.lazy_attribute
     def count_available_places(self):
+        """Возвращает количество доступных мест равным общему количеству."""
         return self.count_places

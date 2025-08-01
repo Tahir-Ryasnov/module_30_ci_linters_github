@@ -1,7 +1,11 @@
+"""Модели базы данных для приложения парковок."""
+
 from . import db
 
 
 class Client(db.Model):
+    """Модель клиента с данными о ФИО, кредитной карте и номере машины."""
+
     __tablename__ = "client"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -13,10 +17,13 @@ class Client(db.Model):
     parkings = db.relationship("ClientParking", back_populates="client")
 
     def __repr__(self):
-        return f"<Client {self.name} {self.surname} ({self.car_number})>"
+        """Возвращает строковое представление клиента."""
+        return f"<Client {self.name} {self.surname} " f"({self.car_number})>"
 
 
 class Parking(db.Model):
+    """Модель парковки с адресом, состоянием и количеством мест."""
+
     __tablename__ = "parking"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -28,10 +35,16 @@ class Parking(db.Model):
     clients = db.relationship("ClientParking", back_populates="parking")
 
     def __repr__(self):
-        return f"<Parking {self.address} ({self.count_available_places}/{self.count_places})>"
+        """Возвращает строковое представление парковки."""
+        return (
+            f"<Parking {self.address} "
+            f"({self.count_available_places}/{self.count_places})>"
+        )
 
 
 class ClientParking(db.Model):
+    """Связующая модель для отметки посещения клиента на парковке."""
+
     __tablename__ = "client_parking"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -41,14 +54,21 @@ class ClientParking(db.Model):
     time_out = db.Column(db.DateTime)
 
     __table_args__ = (
-        db.UniqueConstraint("client_id", "parking_id", name="unique_client_parking"),
+        db.UniqueConstraint(
+            "client_id",
+            "parking_id",
+            name="unique_client_parking"
+        ),
     )
 
     client = db.relationship("Client", back_populates="parkings")
     parking = db.relationship("Parking", back_populates="clients")
 
     def __repr__(self):
+        """Возвращает строковое представление записи посещения парковки."""
         return (
-            f"<ClientParking Client={self.client_id}, Parking={self.parking_id}, "
-            f"In={self.time_in}, Out={self.time_out}>"
+            f"<ClientParking Client={self.client_id}, "
+            f"Parking={self.parking_id}, "
+            f"In={self.time_in}, "
+            f"Out={self.time_out}>"
         )
