@@ -2,8 +2,7 @@
 
 import factory
 import random
-from factory.alchemy import
-import Faker
+from factory.alchemy import SQLAlchemyModelFactory
 
 from hw.app.models import Client, Parking
 from hw.app import db
@@ -21,9 +20,7 @@ class ClientFactory(SQLAlchemyModelFactory):
 
     name = factory.Faker("first_name")
     surname = factory.Faker("last_name")
-    faker = Faker()
-
-    credit_card = factory.LazyFunction(lambda: random.choice([None, faker.credit_card_number()]))
+    credit_card = factory.Faker("credit_card_number")
     car_number = factory.Faker("bothify", text="?###??.##")
 
 

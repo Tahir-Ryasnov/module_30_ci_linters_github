@@ -20,7 +20,6 @@ def create_app():
 
         db.create_all()
 
-
     @app.route("/client_parkings", methods=["POST"])
     def parking_entry():
         data = request.get_json()
