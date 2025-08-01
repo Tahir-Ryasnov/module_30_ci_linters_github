@@ -20,7 +20,6 @@ def create_app():
 
         db.create_all()
 
-    # ... [всё, что до этого — без изменений]
 
     @app.route("/client_parkings", methods=["POST"])
     def parking_entry():
