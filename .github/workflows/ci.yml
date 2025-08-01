@@ -32,5 +32,6 @@ jobs:
 
       - name: Run tests
         env:
-          PYTHONPATH: ${{ github.workspace }}/app:${{ github.workspace }}/hw
+          PYTHONPATH: ${{ github.workspace }}/hw:${{ github.workspace }}/hw
         run: pytest hw/tests
+
