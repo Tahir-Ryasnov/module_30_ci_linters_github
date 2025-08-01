@@ -1,8 +1,8 @@
 """Тесты API для работы с клиентами и парковками."""
 
 import pytest
-from hw.tests.factories import ClientFactory, ParkingFactory
-from hw.app.models import Client, Parking, ClientParking
+# from hw.tests.factories import ClientFactory, ParkingFactory
+# from hw.app.models import Client, Parking, ClientParking
 
 
 @pytest.mark.parametrize("endpoint", ["/clients", "/clients/1"])
@@ -140,7 +140,8 @@ def test_get_endpoints(client, endpoint):
 #
 #
 # def test_create_client_with_factory_2(db):
-#     """Проверка увеличения количества клиентов после создания через фабрику."""
+#     """Проверка увеличения ко
+#     личества клиентов после создания через фабрику."""
 #     count_start = Client.query.count()
 #     _ = ClientFactory()
 #     count_finish = Client.query.count()
